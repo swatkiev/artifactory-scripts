@@ -18,3 +18,6 @@ for RESULT in $RESULTS ; do
     # deleting the corresponding artifact at last
     curl -X DELETE -u <username>:<password> $PATH_TO_FILE
 done
+
+RESULTS=`curl -u $ARTIFACTORY_USER:$ARTIFACTORY_PASSWORD "http://127.0.0.1:8081/artifactory/api/search/creation?from=$START_TIME&to=$END_TIME&repos=$REPO" | grep uri | awk '{print $3}' | sed s'/.$//' | sed s'/.$//' | sed -r 's/^.{1}//' | sed -r 's|/api/storage||'`
+curl -X DELETE -u $ARTIFACTORY_USER:$ARTIFACTORY_PASSWORD $RESULTS
